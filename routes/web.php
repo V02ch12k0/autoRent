@@ -22,3 +22,11 @@ Route::get('/rental-orders/{id}', [RentalOrderController::class, 'show']);
 Route::get('/cars', [CarController::class, 'index']); // добавлено
 Route::get('/cars/{id}', [CarController::class, 'show']);
 
+
+
+Route::get('/favorites', [CarFavoriteController::class, 'index'])->name('favorites.index');
+Route::get('/favorites/create', [CarFavoriteController::class, 'create'])->name('favorites.create');
+Route::post('/favorites', [CarFavoriteController::class, 'store'])->name('favorites.store');
+Route::get('/favorites/edit/{id}', [CarFavoriteController::class, 'edit'])->name('favorites.edit');
+Route::put('/favorites/update/{id}', [CarFavoriteController::class, 'update'])->name('favorites.update');
+Route::get('/favorites/destroy/{id}', [CarFavoriteController::class, 'destroy'])->name('favorites.destroy');
