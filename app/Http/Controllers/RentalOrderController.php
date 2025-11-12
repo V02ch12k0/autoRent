@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\Client;
 use App\Models\RentalOrder;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class RentalOrderController extends Controller
@@ -88,7 +89,14 @@ class RentalOrderController extends Controller
 
     public function destroy(string $id)
     {
+//        RentalOrder::destroy($id);
+//        return redirect('/rental_orders');
+
+        if (! Gate::allows('destroy-rental-order', RentalOrder::all()->where('id', $id)->first())) {
+            return redirect('/error')->with('message',
+                'У вас нет разрешения на удаление автомобиля номер ' . $id);
+        }
         RentalOrder::destroy($id);
-        return redirect('/rental_orders');
+        return redirect('/rental-orders');
     }
 }

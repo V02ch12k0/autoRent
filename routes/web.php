@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarFavoriteController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientFavoriteController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RentalOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +34,18 @@ Route::get('/favorites/destroy/{id}', [CarFavoriteController::class, 'destroy'])
 
 
 Route::get('/rental_orders', [RentalOrderController::class, 'index'])->name('rental_orders.index');
-Route::get('/rental_orders/create', [RentalOrderController::class, 'create'])->name('rental_orders.create');
+Route::get('/rental_orders/create', [RentalOrderController::class, 'create'])->name('rental_orders.create')->middleware('auth');
 Route::post('/rental_orders', [RentalOrderController::class, 'store'])->name('rental_orders.store');
 Route::get('/rental_orders/{id}', [RentalOrderController::class, 'show'])->name('rental_orders.show');
-Route::get('/rental_orders/{id}/edit', [RentalOrderController::class, 'edit'])->name('rental_orders.edit');
-Route::put('/rental_orders/{id}', [RentalOrderController::class, 'update'])->name('rental_orders.update');
-Route::get('/rental_orders/destroy/{id}', [RentalOrderController::class, 'destroy'])->name('rental_orders.destroy');
+Route::get('/rental_orders/{id}/edit', [RentalOrderController::class, 'edit'])->name('rental_orders.edit')->middleware('auth');
+Route::put('/rental_orders/{id}', [RentalOrderController::class, 'update'])->name('rental_orders.update')->middleware('auth');
+Route::get('/rental_orders/destroy/{id}', [RentalOrderController::class, 'destroy'])->name('rental_orders.destroy')->middleware('auth');
+
+
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout']);
+Route::post('/auth', [LoginController::class, 'authenticate']);
+
+Route::get('/error', function () {
+    return view('error', ['message' => session('message')]);
+});

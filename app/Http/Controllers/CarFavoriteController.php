@@ -15,6 +15,7 @@ class CarFavoriteController extends Controller
             'cars' => Car::all(),
             'clients' => Client::all()
         ]);
+
     }
 
     public function store(Request $request)

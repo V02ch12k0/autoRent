@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -23,4 +24,5 @@ class CarController extends Controller
             'car' => Car::all()->where('id', $id)->first(),
         ]);
     }
+
 }
